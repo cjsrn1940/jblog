@@ -3,7 +3,7 @@
 
 <mapper namespace="blog">
 
-	<!-- user 추가 -->
+	<!-- 블로그 생성 -->
 	<insert id="addBlog" parameterType="map">
 		<![CDATA[
 			insert into blog
@@ -14,6 +14,16 @@
 			)
 		]]>
 	</insert>
+	
+	<!-- 회원한명 블로그 정보 가져오기 -->
+	<select id="selectBlogById" parameterType="String" resultType="com.javaex.vo.BlogVo">
+		<![CDATA[
+			select b.id, b.blogTitle, b.logoFile, u.userName
+			from blog b, users u
+			where b.id = u.id
+			and b.id = #{id}
+		]]>
+	</select>
 
 
 

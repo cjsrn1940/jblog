@@ -38,4 +38,11 @@ public class UserDao {
 		
 		return sqlSession.insert("blog.addBlog", bMap);
 	}
+	
+	//user 한명 정보 확인하기
+	public UserVo selectUser(UserVo userVo) {
+		System.out.println("[UserDao.selectUser()]");
+		
+		return sqlSession.selectOne("user.selectUser", userVo);
+	}
 }

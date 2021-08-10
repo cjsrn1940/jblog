@@ -26,7 +26,15 @@
 		]]>
 	</insert>
 
-
+	<!-- 1사람의 정보 가져오기(로그인 확인용) -->
+	<select id="selectUser" parameterType="com.javaex.vo.UserVo" resultType="com.javaex.vo.UserVo">
+		<![CDATA[
+			select id, password, userNo, userName, joinDate
+			from users
+			where id= #{id}
+			and password= #{password}
+		]]>
+	</select>
 
 
 </mapper>

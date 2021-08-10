@@ -38,12 +38,21 @@ public class UserService {
 		Map<String, Object> bMap = new HashMap<String, Object>();
 		bMap.put("id", userVo.getId());
 		bMap.put("blogTitle", userVo.getUserName()+"의 블로그입니다");
-		bMap.put("logoFile", "${pageContext.request.contextPath }/assets/images/spring-logo.jpg");
+		bMap.put("logoFile", "C:\\javaStudy\\workspace_web\\jblog\\webapp\\assets\\images\\spring-logo.jpg");
 		
 		//System.out.println(bMap);
 		
 		userDao.addBlog(bMap);
 		
 		return count;
+	}
+	
+	//로그인 사용자정보 가져오기
+	public UserVo getUser(UserVo userVo) {
+		System.out.println("[UserService.getUser()]");
+		
+		UserVo authUser = userDao.selectUser(userVo);
+		
+		return authUser;
 	}
 }
