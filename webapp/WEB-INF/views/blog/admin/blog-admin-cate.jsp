@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>JBlog</title>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script>
 
 
 </head>
@@ -15,13 +18,14 @@
 	<div id="wrap">
 		
 		<!-- 개인블로그 해더 -->
+		<c:import url="/WEB-INF/views/includes/blog-header.jsp"></c:import>
 
 
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
-				<li class="tabbtn selected"><a href="">기본설정</a></li>
-				<li class="tabbtn"><a href="">카테고리</a></li>
-				<li class="tabbtn"><a href="">글작성</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${sessionScope.authUser.id}/admin/basic">기본설정</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${sessionScope.authUser.id}/admin/category">카테고리</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${sessionScope.authUser.id}/admin/writeForm">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
 			
@@ -46,24 +50,18 @@
 		      		</thead>
 		      		<tbody id="cateList">
 		      			<!-- 리스트 영역 -->
-		      			<tr>
-							<td>1</td>
-							<td>자바프로그래밍</td>
-							<td>7</td>
-							<td>자바기초와 객체지향</td>
-						    <td class='text-center'>
-						    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-						    </td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>오라클</td>
-							<td>5</td>
-							<td>오라클 설치와 sql문</td>
-						    <td class='text-center'>
-						    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-						    </td>
-						</tr>
+		      			<c:forEach items="${blogCateVo}" var="cate" >
+		      				<tr>
+								<td>${cate.cateNo }</td>
+								<td>${cate.cateName }</td>
+								<td>${cate.cntP }</td>
+								<td>${cate.description }</td>
+							    <td class='text-center'>
+							    	<img data-no="${cate.cateNo }"    class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
+							    </td>
+							</tr>
+		      			</c:forEach>
+		      			
 						<!-- 리스트 영역 -->
 					</tbody>
 				</table>
@@ -94,12 +92,35 @@
 		
 		
 		<!-- 개인블로그 푸터 -->
+		<c:import url="/WEB-INF/views/includes/blog-footer.jsp"></c:import>
 		
 	
 	
 	</div>
 	<!-- //wrap -->
 </body>
+
+<script type="text/javascript">
+
+$("#cateList").on("click", ".btnCateDel", function() {
+	console.log("삭제버튼 클릭");
+	
+	var no = $(this).data("no");
+	
+	console.log(no);
+	
+	//ajax로 삭제
+	//db에서 postNo읽어오고 0인지 아닌지 판단해서 삭제
+});
+
+
+</script>
+
+
+
+
+
+
 
 
 

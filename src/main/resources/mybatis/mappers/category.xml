@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+
+	<!-- 카테고리 리스트 불러오기 -->
+	<select id="getCateList" parameterType="String" resultType="com.javaex.vo.CategoryVo">
+		<![CDATA[
+			select  c.cateNo,
+			        c.cateName,
+			        (select  count(case when p.cateNo = c.cateNo then 1 end)
+			        from post p) cntP,
+			        c.description
+			from category c, blog b
+			where c.id = b.id
+			and c.id = #{id}
+			
+		]]>
+	</select>
+	
+</mapper>

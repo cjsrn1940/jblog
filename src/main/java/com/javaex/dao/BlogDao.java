@@ -18,7 +18,7 @@ public class BlogDao {
 		System.out.println("[BlogDao.getBlog()]");
 		BlogVo blogVo = sqlSession.selectOne("blog.selectBlogById", id);
 		
-		System.out.println(blogVo);
+		//System.out.println(blogVo);
 		return blogVo;
 	}
 	
@@ -40,4 +40,6 @@ public class BlogDao {
 		
 		return count;
 	}
+	
+	
 }

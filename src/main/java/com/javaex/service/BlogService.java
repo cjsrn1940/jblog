@@ -3,6 +3,7 @@ package com.javaex.service;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class BlogService {
 	}
 	
 	
+
 	//블로그 기본설정 수정
 	public int updateBlogBasic(String id, String blogTitle, MultipartFile file) {
 		System.out.println("[BlogService.updateBlogBasic()]");
@@ -86,6 +88,13 @@ public class BlogService {
 		
 
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
