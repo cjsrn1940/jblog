@@ -55,14 +55,7 @@
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
 
-	<!-- url매핑 고치기
-	
-	
-	
-	**************************고치기****************************	
-
-	
-	-->
+	<!-- url매핑 -->
 	<mvc:resources mapping="/upload/**"
 		location="file:C:/javaStudy/upload/" /> 
 	

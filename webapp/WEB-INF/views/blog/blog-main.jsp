@@ -22,7 +22,17 @@
 				<div id="profile">
 					
 					<!-- 기본이미지 -->
-					<img id="proImg" src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg">
+					<%-- <c:if test="${ empty blogVo.logoFile}">
+						<img id="proImg" src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg">
+					</c:if> --%>
+					<c:choose>
+	      				<c:when test="${ empty blogVo.logoFile}">
+	      					<img id="proImg" src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg">
+	      				</c:when>
+	      				<c:otherwise>
+	      					<img id="proImg" src="${pageContext.request.contextPath }/upload/${blogVo.logoFile}">
+	      				</c:otherwise>
+	      			</c:choose>
 					
 					<!-- 사용자업로드 이미지 -->
 					<%-- <img id="proImg" src=""> --%>
@@ -116,6 +126,8 @@
 		</div>	
 		<!-- //content -->
 		<div class=></div>
+		
+		<!-- 개인블로그 푸터 -->
 		<c:import url="/WEB-INF/views/includes/blog-footer.jsp"></c:import>
 		
 	

@@ -38,9 +38,8 @@ public class UserService {
 		Map<String, Object> bMap = new HashMap<String, Object>();
 		bMap.put("id", userVo.getId());
 		bMap.put("blogTitle", userVo.getUserName()+"의 블로그입니다");
-		bMap.put("logoFile", "C:\\javaStudy\\workspace_web\\jblog\\webapp\\assets\\images\\spring-logo.jpg");
 		
-		//System.out.println(bMap);
+		System.out.println(bMap);
 		
 		userDao.addBlog(bMap);
 		
