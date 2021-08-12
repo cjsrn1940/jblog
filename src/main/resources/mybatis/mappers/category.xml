@@ -10,12 +10,59 @@
 			        c.cateName,
 			        (select  count(case when p.cateNo = c.cateNo then 1 end)
 			        from post p) cntP,
-			        c.description
+			        c.description,
+			        c.regDate
 			from category c, blog b
 			where c.id = b.id
 			and c.id = #{id}
+			order by c.regDate desc
 			
 		]]>
 	</select>
 	
+	<!-- 카테고리 불러오기 -->
+	<select id="selectCateBycateNo" parameterType="int" resultType="com.javaex.vo.CategoryVo">
+		<![CDATA[
+			select  c.cateNo,
+			        c.cateName,
+			        (select  count(case when p.cateNo = c.cateNo then 1 end)
+			        from post p) cntP,
+			        c.description,
+			        c.regDate,
+			        c.id
+			from category c
+			where c.cateNo = #{cateNo}
+		]]>
+	</select>
+	
+	
+	<!-- 카테고리 삭제(포스트가 0개인 경우) -->
+	<delete id="deleteCate" parameterType="int">
+		<![CDATA[
+			DELETE FROM (select  c.cateNo,
+			                    (select  count(case when p.cateNo = c.cateNo then 1 end)
+			                    from post p) cntP
+			            from category c) deleteT
+			WHERE cateNo = #{cateNo}
+			and cntP = 0
+		]]>
+	</delete>
+	
+	
+	<!-- 카테고리 등록(키값 지정) -->
+	<insert id="insertCate" parameterType="com.javaex.vo.CategoryVo">
+		<selectKey keyProperty="cateNo" resultType="int" order="BEFORE">
+			select seq_category_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into category
+			values(
+			    #{cateNo},
+			    #{id},
+			    #{cateName},
+			    #{description},
+			    sysdate
+			)
+		]]>
+	</insert>
 </mapper>

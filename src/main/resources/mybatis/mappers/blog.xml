@@ -14,7 +14,7 @@
 		]]>
 	</insert>
 	
-	<!-- 회원한명 블로그 정보 가져오기 -->
+	<!-- 회원한명 블로그 정보 가져오기(기본) -->
 	<select id="selectBlogById" parameterType="String" resultType="com.javaex.vo.BlogVo">
 		<![CDATA[
 			select b.id, b.blogTitle, b.logoFile, u.userName
@@ -23,6 +23,88 @@
 			and b.id = #{id}
 		]]>
 	</select>
+
+	
+	<!-- 회원한명 블로그 정보 가져오기(카테고리) -->
+	<select id="selectCateList" parameterType="String" resultType="com.javaex.vo.BlogVo">
+		<![CDATA[
+			select  cateNo,
+			        cateName,
+			        regDate
+			from category
+			where id=#{id}
+			order by regDate desc
+		]]>
+	</select>
+	
+	
+	<!-- 회원한명 블로그 정보 가져오기(포스트) -->
+	<select id="selectPostList" parameterType="map" resultType="com.javaex.vo.BlogVo">
+		<![CDATA[
+			select  p.postTitle,
+			        p.regDate,
+			        c.cateNo,
+			        p.postNo
+			from post p, category c
+			where c.cateNo = p.cateNo
+			and c.id = #{id}
+			and p.cateNo=#{cateNo}
+			order by regDate desc
+		]]>
+	</select>
+	
+	<!-- 회원한명 블로그 정보 가져오기(최신 포스트) -->
+	<select id="selectRegdateMaxPost" parameterType="map" resultType="com.javaex.vo.BlogVo">
+		<![CDATA[
+			select  p.postTitle,
+			        u.userName,
+			        b.id,
+			        p.regDate,
+			        p.postContent
+			from users u, post p, category c, blog b
+			where u.id = c.id
+			and b.id = c.id
+			and c.cateNo = p.cateNo
+			and c.id = #{id}
+			and p.cateNo = #{cateNo}
+			and p.regDate = (select max(p.regDate) 
+			                from post p, category c
+			                where p.cateNo = c.cateNo
+			                and c.cateNo = #{cateNo})
+		]]>
+	</select>
+	
+	<!-- 회원한명 블로그 정보 가져오기(선택 포스트) -->
+	<select id="selectPost" parameterType="map" resultType="com.javaex.vo.BlogVo">
+		<![CDATA[
+			select  p.postTitle,
+			        u.userName,
+			        b.id,
+			        p.regDate,
+			        p.postContent
+			from users u, post p, category c, blog b
+			where u.id = c.id
+			and b.id = c.id
+			and c.cateNo = p.cateNo
+			and c.id = #{id}
+			and c.cateNo = #{cateNo}
+			and p.postNo = #{postNo}
+		]]>
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	<!-- 블로그 테이블수정(blogTitle, logoFile) -->
 	<update id="updateBlogBasic" parameterType="com.javaex.vo.BlogVo">

@@ -23,5 +23,29 @@ public class CategoryService {
 		
 		return blogCateVo;
 	}
+	
+	//카테고리 삭제
+	public int deleteCate(int cateNo) {
+		System.out.println("[CategoryService.deleteCate()]");
+		
+		int count = categoryDao.deleteCate(cateNo);
+		
+		return count;
+	}
+	
+	//카테고리 추가
+	public CategoryVo addCategory(CategoryVo categoryVo) {
+		System.out.println("[CategoryService.addCategory()]");
+		
+		System.out.println(categoryVo);
+		categoryDao.addCategory(categoryVo);
+		System.out.println(categoryVo);
+		
+		int cateNo = categoryVo.getCateNo();
+		
+		CategoryVo cateVo = categoryDao.selectCate(cateNo);
+		
+		return cateVo;
+	}
 		
 }

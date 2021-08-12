@@ -3,7 +3,9 @@ package com.javaex.service;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,65 @@ public class BlogService {
 		
 		return blogVo;
 	}
+	
+	//카테고리 정보 불러오기
+	public List<BlogVo> cateInfo(String id) {
+		System.out.println("[BlogService.cateInfo()]");
+		
+		List<BlogVo> blogCateList = blogDao.cateInfo(id);
+		
+		return blogCateList;
+	}
+	
+	//카테고리 별 포스트 정보 불러오기
+	public List<BlogVo> postInfo(int cateNo, String id) {
+		System.out.println("[BlogService.postInfo()]");
+		
+		Map<String, Object> bMap = new HashMap<String, Object>();
+		bMap.put("id", id);
+		bMap.put("cateNo", cateNo);
+		
+		List<BlogVo> postList = blogDao.postInfo(bMap);
+		
+		return postList;
+	}
+	
+	//카테고리 별 최신 포스트 상세(기본)
+	public BlogVo getPost(String id, int cateNo) {
+		System.out.println("[BlogService.getPost()]");
+		
+		Map<String, Object> bMap = new HashMap<String, Object>();
+		bMap.put("id", id);
+		bMap.put("cateNo", cateNo);
+		
+		BlogVo blogVo = blogDao.getPostBasic(bMap);
+		
+		return blogVo;
+	}
+	
+	//카테고리 별 최신 포스트 상세(기본 + postNo)
+	public BlogVo getPost(String id, int cateNo, int postNo) {
+		System.out.println("[BlogService.getPost()]");
+		
+		Map<String, Object> bMap = new HashMap<String, Object>();
+		bMap.put("id", id);
+		bMap.put("cateNo", cateNo);
+		bMap.put("postNo", postNo);
+		
+		BlogVo blogVo = blogDao.getPostSelect(bMap);
+		
+		return blogVo;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 
