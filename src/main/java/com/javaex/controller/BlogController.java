@@ -36,9 +36,18 @@ public class BlogController {
 		List<BlogVo> blogCateList = blogService.cateInfo(id);
 		System.out.println(blogCateList);
 		
+		//cateNo이 파라미터로 안올 때 즉, 기본 블로그 뜰 때 최신카테고리 뜨기
+		int size = blogCateList.size();
+		System.out.println("size"+size);
+		if(cateNo == 0) {
+			cateNo = blogCateList.get(size-1).getCateNo();
+			System.out.println(cateNo);
+		}
+		
 		//카테고리 별 포스트 정보
 		List<BlogVo> blogPostbyCateList = blogService.postInfo(cateNo, id);
 		System.out.println(blogPostbyCateList);
+		
 		
 		BlogVo blogPostVo = new BlogVo();
 		
@@ -53,6 +62,8 @@ public class BlogController {
 			System.out.println(blogPostVo);
 		}
 		
+		
+		
 		if(blogVo != null) {
 			//System.out.println(blogVo);
 			session.setAttribute("blogVoBlogTitle", blogVo.getBlogTitle());
@@ -61,6 +72,7 @@ public class BlogController {
 			model.addAttribute("blogCateList", blogCateList);
 			model.addAttribute("blogPostbyCateList", blogPostbyCateList);
 			model.addAttribute("blogPostVo", blogPostVo);
+			
 			
 			return "/blog/blog-main";
 		} else {
